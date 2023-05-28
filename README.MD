@@ -1,4 +1,6 @@
 ## Getting Started
+This program uses Python yfinance library to pull Indian stock market data and write it into 
+sqlite database.
 
 ### Setup DB
 
@@ -15,6 +17,7 @@ Run below commands:
 
   ```sh
   python3 -m venv .venv
+  source ./.venv/bin/activate
   python3 -m pip install yfinance
   ```
 
