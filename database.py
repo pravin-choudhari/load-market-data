@@ -1,5 +1,6 @@
 import sqlite3
 from stock import Stock
+import pandas as pd
 
 class Database:
     def __init__(self) :
@@ -45,6 +46,19 @@ class Database:
             cursor = self.__con.cursor()
             cursor.execute(sqlite_insert_with_param, data_tuple)
             self.__con.commit()
-            cursor.close()
+            self.__con.commit()
         except sqlite3.IntegrityError as err:
             print(f"Ignoring error: {err}")
+    
+    def getStockDataAsDf(self, start_date) :
+        try:
+           input_param = {'in_start_date': start_date}
+
+           sql_select_with_param = """select * from security where trade_date > :in_start_date"""
+
+           df = pd.read_sql_query(sql=sql_select_with_param,con=self.__con, params=input_param )
+           self.__con.commit()
+           return df
+        except sqlite3.Error as err:
+            print(f"Got error: {err}")
+            
